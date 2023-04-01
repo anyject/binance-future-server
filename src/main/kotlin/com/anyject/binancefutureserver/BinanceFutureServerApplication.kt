@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class BinanceFutureServerApplication
 
 fun main(args: Array<String>) {
-    println("HELLO")
     runApplication<BinanceFutureServerApplication>(*args)
 }
