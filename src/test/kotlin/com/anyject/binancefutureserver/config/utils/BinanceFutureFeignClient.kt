@@ -21,4 +21,7 @@ interface BinanceFutureFeignClient {
         @HeaderMap headerMap: Map<String, String>,
         @QueryMap queryMap: Map<String, Any>,
     ): Response
+
+    @RequestLine("POST /listenKey")
+    fun retrieveListenKey(@HeaderMap headerMap: Map<String, String>): ListenKeyVM
 }
