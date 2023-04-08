@@ -25,9 +25,11 @@ dependencies {
     implementation("io.github.openfeign:feign-jackson")
     implementation("io.github.openfeign:feign-okhttp")
     implementation("commons-codec:commons-codec")
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("org.awaitility:awaitility")
 }
 
 dependencyManagement {
