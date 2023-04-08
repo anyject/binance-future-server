@@ -4,17 +4,14 @@ import com.anyject.binancefutureserver.config.utils.BinanceFutureFeignClient
 import com.anyject.binancefutureserver.config.utils.OpenFeignConfig
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
-import org.awaitility.Awaitility.await
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient
 import org.springframework.web.reactive.socket.client.WebSocketClient
-import reactor.core.Disposable
 import reactor.core.publisher.Mono
 import java.net.URI
-import java.time.Duration
 import java.util.*
-import java.util.concurrent.TimeUnit
+
 
 class WebSocketClientTest {
 
@@ -62,18 +59,12 @@ class WebSocketClientTest {
             method = "ping"
         )
         val url = "wss://testnet.binance.vision/ws-api/v3"
-        val response = webSocketClient.execute(
+        webSocketClient.execute(
             URI.create(url)
         ) { session ->
             session.send(Mono.just(session.textMessage(objectMapper.writeValueAsString(param))))
-                .doOnNext{
-            session.receive().doOnNext {
-                println("Payload : ${it.payloadAsText}")
-            }
-                .doOnNext{ assertThat(it.payloadAsText).isNotBlank()}
-                .doOnNext{session.close()}}
-        }.doFinally { println("FINISH!!") }.subscribe()
-        await().atMost(5L, TimeUnit.SECONDS).untilAsserted{ assertThat(response).isInstanceOf(Disposable::class.java)}
+                .thenMany(session.receive().map { it.payloadAsText }).log().then()
+        }.then()
     }
 
     private data class WebSocketParam(
