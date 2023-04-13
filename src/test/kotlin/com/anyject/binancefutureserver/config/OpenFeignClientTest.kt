@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.config
 
-import com.anyject.binancefutureserver.config.utils.BinanceFutureFeignClient
+import com.anyject.binancefutureserver.learning.BinanceFutureFeignClient
 import com.anyject.binancefutureserver.config.utils.HmacUtil
 import com.anyject.binancefutureserver.config.utils.OpenFeignConfig
 import feign.*

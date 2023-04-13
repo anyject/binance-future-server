@@ -1,14 +1,14 @@
 package com.anyject.binancefutureserver
 
-import com.anyject.binancefutureserver.config.ApplicationProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
+import org.springframework.cloud.openfeign.EnableFeignClients
 
 @SpringBootApplication
-@EnableConfigurationProperties(ApplicationProperties::class)
+@EnableFeignClients
 class BinanceFutureServerApplication
 
 fun main(args: Array<String>) {
+
     runApplication<BinanceFutureServerApplication>(*args)
 }

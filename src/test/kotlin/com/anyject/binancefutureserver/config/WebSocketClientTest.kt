@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.config
 
-import com.anyject.binancefutureserver.config.utils.BinanceFutureFeignClient
+import com.anyject.binancefutureserver.learning.BinanceFutureFeignClient
 import com.anyject.binancefutureserver.config.utils.OpenFeignConfig
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat

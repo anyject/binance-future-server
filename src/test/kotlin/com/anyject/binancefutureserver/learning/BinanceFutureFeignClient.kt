@@ -1,5 +1,6 @@
-package com.anyject.binancefutureserver.config.utils
+package com.anyject.binancefutureserver.learning
 
+import com.anyject.binancefutureserver.config.utils.ListenKeyVM
 import feign.HeaderMap
 import feign.QueryMap
 import feign.RequestLine
@@ -18,7 +19,7 @@ interface BinanceFutureFeignClient {
 
     @RequestLine("GET /account")
     fun retrieveAccountInformation(
-        @HeaderMap headerMap: Map<String, String>,
+        @HeaderMap headerMap: Map<String, Any>,
         @QueryMap queryMap: Map<String, Any>,
     ): Response
 
