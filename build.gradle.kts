@@ -55,6 +55,7 @@ tasks.processResources {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    exclude("com/anyject/learning/**")
 }
 
 tasks.processResources {

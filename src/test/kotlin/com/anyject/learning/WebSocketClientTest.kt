@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono
 import java.net.URI
 import java.util.*
 
-@Disabled
 class WebSocketClientTest {
 
     companion object {

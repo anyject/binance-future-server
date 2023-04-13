@@ -9,7 +9,6 @@ import org.springframework.core.env.Environment
 import org.springframework.core.env.get
 import org.springframework.test.context.ActiveProfiles
 
-@Disabled
 @SpringBootTest
 @ActiveProfiles("testnet")
 class EnvironmentTest {
