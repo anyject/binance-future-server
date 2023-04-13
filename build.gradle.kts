@@ -26,6 +26,7 @@ dependencies {
     implementation("io.github.openfeign:feign-okhttp")
     implementation("commons-codec:commons-codec")
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
+    kapt("org.springframework.boot:spring-boot-configuration-processor:3.0.4")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
@@ -43,6 +44,10 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "17"
     }
+}
+
+tasks.processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 tasks.withType<Test> {
