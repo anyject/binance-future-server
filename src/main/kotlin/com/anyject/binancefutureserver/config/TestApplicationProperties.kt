@@ -7,8 +7,13 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "binance")
 class TestApplicationProperties {
     var apiKey: String? = null
+<<<<<<< Updated upstream:src/main/kotlin/com/anyject/binancefutureserver/config/TestApplicationProperties.kt
     var secretKey: String? = null
     var defaultUrls: DefaultUrls = DefaultUrls()
+=======
+    var secretKey: String? = nul
+    var defaultUrls: DefaultUrls? = null
+>>>>>>> Stashed changes:src/main/kotlin/com/anyject/binancefutureserver/config/ApplicationProperties.kt
 
     class DefaultUrls {
         var rest: RestUrls = RestUrls()
