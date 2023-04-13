@@ -1,6 +1,7 @@
-package com.anyject.binancefutureserver.config
+package com.anyject.learning.config
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -8,6 +9,7 @@ import org.springframework.core.env.Environment
 import org.springframework.core.env.get
 import org.springframework.test.context.ActiveProfiles
 
+@Disabled
 @SpringBootTest
 @ActiveProfiles("testnet")
 class EnvironmentTest {

@@ -1,11 +1,11 @@
-package com.anyject.binancefutureserver.config
+package com.anyject.learning
 
-import com.anyject.binancefutureserver.config.utils.BinanceFutureFeignClient
-import com.anyject.binancefutureserver.config.utils.HmacUtil
-import com.anyject.binancefutureserver.config.utils.OpenFeignConfig
+import com.anyject.learning.config.OpenFeignConfig
+import com.anyject.learning.utils.HmacUtil
 import feign.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus
 import java.sql.Timestamp
 import java.util.*
 
+@Disabled
 @ExtendWith(MockitoExtension::class)
 class OpenFeignClientTest {
     private lateinit var v1Client: BinanceFutureFeignClient

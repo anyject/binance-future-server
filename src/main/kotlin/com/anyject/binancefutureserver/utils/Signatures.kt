@@ -6,7 +6,6 @@ import javax.crypto.spec.SecretKeySpec
 
 
 class Signatures {
-
     companion object{
         private val HASH_ALGORITHM = "HmacSHA256"
         @JvmStatic
