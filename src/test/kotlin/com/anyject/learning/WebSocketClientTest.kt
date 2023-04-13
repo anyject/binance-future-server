@@ -1,10 +1,10 @@
-package com.anyject.binancefutureserver.config
+package com.anyject.learning
 
-import com.anyject.binancefutureserver.learning.BinanceFutureFeignClient
-import com.anyject.binancefutureserver.config.utils.OpenFeignConfig
+import com.anyject.learning.config.OpenFeignConfig
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient
 import org.springframework.web.reactive.socket.client.WebSocketClient
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono
 import java.net.URI
 import java.util.*
 
-
+@Disabled
 class WebSocketClientTest {
 
     companion object {

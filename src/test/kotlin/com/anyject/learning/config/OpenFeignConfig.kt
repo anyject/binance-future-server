@@ -1,6 +1,6 @@
-package com.anyject.binancefutureserver.config.utils
+package com.anyject.learning.config
 
-import com.anyject.binancefutureserver.learning.BinanceFutureFeignClient
+import com.anyject.learning.BinanceFutureFeignClient
 import feign.Feign
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder

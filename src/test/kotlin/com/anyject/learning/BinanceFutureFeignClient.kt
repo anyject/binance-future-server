@@ -1,6 +1,6 @@
-package com.anyject.binancefutureserver.learning
+package com.anyject.learning
 
-import com.anyject.binancefutureserver.config.utils.ListenKeyVM
+import com.anyject.learning.vo.ListenKeyVO
 import feign.HeaderMap
 import feign.QueryMap
 import feign.RequestLine
@@ -24,5 +24,5 @@ interface BinanceFutureFeignClient {
     ): Response
 
     @RequestLine("POST /listenKey")
-    fun retrieveListenKey(@HeaderMap headerMap: Map<String, String>): ListenKeyVM
+    fun retrieveListenKey(@HeaderMap headerMap: Map<String, String>): ListenKeyVO
 }
