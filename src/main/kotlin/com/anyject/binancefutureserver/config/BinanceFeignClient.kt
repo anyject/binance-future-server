@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam
 interface BinanceFeignClient {
 
     @GetMapping("/fapi/v1/premiumIndex")
-    fun getResource(@RequestHeader headers: Map<String, String>,
+    fun premiumIndex(@RequestHeader headers: Map<String, String>,
                     @RequestParam params: Map<String, Any>,
     ): ResponseEntity<HashMap<String, Any>>
 }

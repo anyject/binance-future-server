@@ -7,7 +7,6 @@ plugins {
     kotlin("kapt") version "1.5.31"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
-    kotlin("kapt") version "1.7.22"
 }
 
 group = "com.anyject"

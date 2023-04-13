@@ -6,23 +6,24 @@ import org.springframework.stereotype.Component
 @Component
 @ConfigurationProperties(prefix = "binance")
 class ApplicationProperties {
-    var apiKey: String? = null
-    var secretKey: String? = null
-    var defaultUrls: DefaultUrls? = null
+    lateinit var apiKey: String
+    lateinit var secretKey: String
+    val defaultUrls = DefaultUrls()
 
     class DefaultUrls {
-        var rest: Rest? = null
-        var websocket: Websocket? = null
+        val rest = Rest()
+        val websocket = Websocket()
+
+        class Rest {
+            lateinit var usdm: String
+            lateinit var coinm: String
+        }
+
+        class Websocket {
+            lateinit var usdm: String
+            lateinit var coinm: String
+            lateinit var websocketApi: String
+        }
     }
 
-    class Rest {
-        var usdm: String? = null
-        var coinm: String? = null
-    }
-
-    class Websocket {
-        var usdm: String? = null
-        var coinm: String? = null
-        var websocketApi: String? = null
-    }
 }
