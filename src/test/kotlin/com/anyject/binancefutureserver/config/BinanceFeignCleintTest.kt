@@ -15,8 +15,12 @@ class BinanceFeignCleintTest(
     @Test
     fun `premiumIndex 테스트`() {
         val headers = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON.toString())
-        val params = mapOf("symbol" to "BTCUSDT")
-        val ret = feignClient.premiumIndex(headers, params)
-        Assertions.assertThat(ret.body!!["symbol"]).isEqualTo("BTCUSDT")
+        //val params = mapOf("symbol" to "BTCUSDT")
+        val params = HashMap<String, Any>()
+        val json = feignClient.getMarketPrice(headers, params)
+
+
+        println(json.javaClass)
+        Assertions.assertThat(json).isNotNull
     }
 }

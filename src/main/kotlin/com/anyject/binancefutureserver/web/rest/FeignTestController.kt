@@ -17,10 +17,10 @@ class FeignTestController(
     private val appProperties: ApplicationProperties
 ) {
     @GetMapping("/resource")
-    fun getResource(): ResponseEntity<HashMap<String, Any>> {
+    fun getResource(): Any {
         val headers = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON.toString())
         val params = mapOf("symbol" to "BTCUSDT")
-        return binanceFeignClient.premiumIndex(headers, params)
+        return binanceFeignClient.getMarketPrice(headers, params)
     }
     @GetMapping("/")
     fun test(): String {
