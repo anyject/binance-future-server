@@ -1,5 +1,6 @@
 package com.anyject.learning.config
 
+import com.anyject.binancefutureserver.BinanceFutureServerApplication
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -9,21 +10,20 @@ import org.springframework.core.env.Environment
 import org.springframework.core.env.get
 import org.springframework.test.context.ActiveProfiles
 
-@SpringBootTest
-@ActiveProfiles("testnet")
+@SpringBootTest(classes = [BinanceFutureServerApplication::class])
 class EnvironmentTest {
     @Autowired
     lateinit var env: Environment
 
     @Test
     fun `Get application-yml data`() {
-        assertThat(env["telegram.username"]).isInstanceOf(String::class.java)
+        assertThat(env["app.telegram.username"]).isInstanceOf(String::class.java)
     }
 
     @Test
     fun `Get application-testnet data`() {
-        assertThat(env["binance.api-key"]).isInstanceOf(String::class.java)
-        assertThat(env["binance.default-urls.rest.usdm"]).isInstanceOf(String::class.java)
-        assertThat(env["binance.default-urls.websocket.usdm"]).isInstanceOf(String::class.java)
+        assertThat(env["app.binance.api-key"]).isInstanceOf(String::class.java)
+        assertThat(env["app.binance.default-urls.rest.usdm"]).isInstanceOf(String::class.java)
+        assertThat(env["app.binance.default-urls.websocket.usdm"]).isInstanceOf(String::class.java)
     }
 }
