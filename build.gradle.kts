@@ -56,7 +56,14 @@ tasks.processResources {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.register("buildTest", Test::class) {
     exclude("com/anyject/learning/**")
+}
+
+tasks.named("build") {
+    dependsOn("buildTest")
 }
 
 tasks.processResources {
