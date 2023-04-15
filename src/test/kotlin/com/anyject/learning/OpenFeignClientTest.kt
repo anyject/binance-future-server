@@ -44,7 +44,7 @@ class OpenFeignClientTest {
     @Test
     fun `Send Account Information and Signature request and retrieve response body`() {
         val timestamp = Timestamp(System.currentTimeMillis()).time
-        val secretKey = System.getenv("SECRET_KEY")
+        val secretKey = System.getenv("SECRET_KEY_TESTNET")
         val totalParam = "timestamp=$timestamp&recvWindow=60000"
         val signature = HmacUtil.digest(key = secretKey, msg = totalParam)
         val queryMap = LinkedHashMap<String, Any>()
@@ -52,7 +52,7 @@ class OpenFeignClientTest {
         queryMap["recvWindow"] = 60000
         queryMap["signature"] = signature
         val headerMap = HashMap<String, String>()
-        headerMap["X-MBX-APIKEY"] = System.getenv("API_KEY")
+        headerMap["X-MBX-APIKEY"] = System.getenv("API_KEY_TESTNET")
         headerMap["Content-Type"] = "application/json"
         val response = v2Client.retrieveAccountInformation(headerMap,queryMap)
         assertThat(response.status()).isEqualTo(HttpStatus.OK.value())
