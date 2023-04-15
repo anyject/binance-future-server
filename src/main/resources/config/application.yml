@@ -1,0 +1,8 @@
+app:
+  telegram:
+    username: ENC(/UXtvcSb+1ZcL5tcOGn2X4Yc3Tx+XyyfjmjIpMJ9cgimOyGJSH5Z6w==)
+    api-key: ENC(Dpz8phM9OAPf1WK/W6/C77Ua9ZIz4DWAgHderv6aWQkuIuUSj96dQ6LW4yLYbfKyYX3Bsx0K3K4=)
+
+  jasypt:
+    encryptor:
+      password: ${APP_ENCRYPTION_PASSWORD}

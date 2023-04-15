@@ -23,13 +23,13 @@ class FeignTestController(
     }
     @GetMapping("/")
     fun test(): String {
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.apiKey}")
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.secretKey}")
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.defaultUrls.rest.coinm}")
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.defaultUrls.rest.usdm}")
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.defaultUrls.websocket.coinm}")
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.defaultUrls.websocket.usdm}")
-        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.defaultUrls.websocket.websocketApi}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.apiKey}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.secretKey}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.defaultUrls.rest.coinm}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.defaultUrls.rest.usdm}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.defaultUrls.websocket.coinm}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.defaultUrls.websocket.usdm}")
+        println(">>>>>>>>>>>>>>>>>>>>${testApplicationProperties.binance.defaultUrls.websocket.websocketApi}")
         return "!"
     }
 }

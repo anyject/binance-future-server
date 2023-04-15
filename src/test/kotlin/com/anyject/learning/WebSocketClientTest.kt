@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono
 import java.net.URI
 import java.util.*
 
-@Disabled
 class WebSocketClientTest {
 
     companion object {
@@ -40,7 +39,7 @@ class WebSocketClientTest {
         private fun setListenKey() {
             v1Client = OpenFeignConfig().getV1Client()
             val headerMap = HashMap<String, String>()
-            headerMap["X-MBX-APIKEY"] = System.getenv("API_KEY")
+            headerMap["X-MBX-APIKEY"] = System.getenv("API_KEY_TESTNET")
             headerMap["Content-Type"] = "application/json"
             listenKey = v1Client.retrieveListenKey(headerMap).listenKey
         }
