@@ -1,5 +1,6 @@
-package com.anyject.binancefutureserver.config
+package com.anyject.learning.config
 
+import com.anyject.binancefutureserver.config.ApplicationProperties
 import org.springframework.stereotype.Component
 import kotlin.reflect.full.memberProperties
 
