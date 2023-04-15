@@ -1,0 +1,19 @@
+app:
+  binance:
+    api-key: ENC(ULfE84AyhhrlZkJ8gk3fyprupdmN6BaJBy/DVWG+rWCJLw40l0VXgs8uodDRe0tEeIrCo58q4fAbKykuStgmsi6uOKGTBNic3pfefu3KuIU=)
+    secret-key: ENC(gCfXhn3Hd5x46vST66ejznkkipN2vnptJdKR1tKF9xnWBI/gy8vvbQpCAZAiN3M4DHCt3IKbRnXh+ayDWgzvK5HFhlgjyfyGolAsp92CNww=)
+    default-urls:
+      rest:
+        usdm: https://testnet.binancefuture.com
+        coinm: https://testnet.binancefuture.com
+      websocket:
+        usdm: wss://stream.binancefuture.com
+        coinm: wss://dstream.binancefuture.com
+        websocket-api: wss://testnet.binance.vision/ws-api/v3
+  telegram:
+    username: ENC(/UXtvcSb+1ZcL5tcOGn2X4Yc3Tx+XyyfjmjIpMJ9cgimOyGJSH5Z6w==)
+    api-key: ENC(Dpz8phM9OAPf1WK/W6/C77Ua9ZIz4DWAgHderv6aWQkuIuUSj96dQ6LW4yLYbfKyYX3Bsx0K3K4=)
+
+  jasypt:
+    encryptor:
+      password: ${APP_ENCRYPTION_PASSWORD}
