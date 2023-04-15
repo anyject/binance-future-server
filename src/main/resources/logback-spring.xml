@@ -1,0 +1,26 @@
+<configuration>
+    <springProfile name="testnet">
+        <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="console" />
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/var/log/myapp.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/logs/binance-future/server/application/binance_future_server.%d{yyyy-MM-dd}.log</fileNamePattern>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="rolling" />
+        </root>
+    </springProfile>
+</configuration>
