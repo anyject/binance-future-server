@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus
 import java.sql.Timestamp
 import java.util.*
 
-@Disabled
 @ExtendWith(MockitoExtension::class)
 class OpenFeignClientTest {
     private lateinit var v1Client: BinanceFutureFeignClient
