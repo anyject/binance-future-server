@@ -24,11 +24,11 @@ class FeignTestController(
     fun test(): String {
         println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.apiKey}")
         println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.secretKey}")
-        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls!!.rest!!.coinm}")
-        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls!!.rest!!.usdm}")
-        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls!!.websocket!!.coinm}")
-        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls!!.websocket!!.usdm}")
-        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls!!.websocket!!.websocketApi}")
+        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls.rest.coinm}")
+        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls.rest.usdm}")
+        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls.websocket.coinm}")
+        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls.websocket.usdm}")
+        println(">>>>>>>>>>>>>>>>>>>>${appProperties.binance.defaultUrls.websocket.websocketApi}")
         return "!"
     }
 }
