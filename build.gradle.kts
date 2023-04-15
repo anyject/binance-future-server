@@ -29,8 +29,13 @@ dependencies {
     implementation("commons-codec:commons-codec")
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+    implementation("ch.qos.logback:logback-classic")
+    implementation("ch.qos.logback:logback-access")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
+
     kapt("org.springframework.boot:spring-boot-configuration-processor:3.0.4")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.awaitility:awaitility")
