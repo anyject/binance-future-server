@@ -6,3 +6,14 @@ app:
   jasypt:
     encryptor:
       password: ${APP_ENCRYPTION_PASSWORD}
+
+server:
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      directory: /logs/binance-future/server/access
+      pattern: '%h %l %u [%{yy-MM-dd:HH:mm:ss}t] "%r" %s %b %D %{User-Agent}i' #'%h %l %u %t "%r" %s %b'
+      file-date-format: yy-MM-dd
+      prefix: binance_future_server_access_log.
+      suffix: .log
