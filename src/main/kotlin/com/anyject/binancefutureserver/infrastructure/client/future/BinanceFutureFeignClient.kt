@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 
 
-@FeignClient(name = "binance", url = "\${binance.default-urls.rest.usdm}")
+@FeignClient(name = "binance", url = "\${app.binance.default-urls.rest.usdm}")
 interface BinanceFutureFeignClient {
 
     @GetMapping("/fapi/v1/exchangeInfo")
