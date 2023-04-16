@@ -4,6 +4,7 @@ import com.anyject.binancefutureserver.infrastructure.client.future.BinanceFutur
 import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
 import com.anyject.binancefutureserver.infrastructure.client.response.MarketPriceResponse
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -33,25 +34,24 @@ class BinanceFutureFeignClientTest(
         assertThat(body).isNotNull
     }
     @Test
-    fun `getMarketPriceBySymbol 테스트`() {
-        try {
-            var symbol = "BTCUSDT"
-            var response = feignClient.getMarketPriceBySymbol(symbol = symbol)
-            var marketPrice = response.body as MarketPriceResponse
-            assertThat(response.statusCode)
-                .isEqualTo(HttpStatusCode.valueOf(200))
-            assertThat(marketPrice).isNotNull
+    fun `getMarketPriceBySymbol 성공 테스트`() {
+        var symbol = "BTCUSDT"
+        var response = feignClient.getMarketPriceBySymbol(symbol = symbol)
+        var marketPrice = response.body as MarketPriceResponse
+        assertThat(response.statusCode)
+            .isEqualTo(HttpStatusCode.valueOf(200))
+        assertThat(marketPrice).isNotNull
 
-            symbol = "ABCDEFU"
-            /* 정훈아 이건 어떻게 테스트해??? */
-            response = feignClient.getMarketPriceBySymbol(symbol = symbol) // FeignClient Exception
-            println(">>>>>>>>>>>>>>>>>>" + response.toString())
-        }
-        catch(e: Exception) {
-            print(11111111111111)
-        }
-
-        //marketPrice = response.body as MarketPriceResponse
-        //assertThat(response.statusCode).isEqualTo(HttpStatusCode.valueOf(400))
     }
+
+    @Test
+    fun `getMarketPriceBySymbol 취급하지 않은 symbol로 테스트`() {
+        val symbol = "ABCDEFU"
+        assertThatThrownBy {
+            feignClient.getMarketPriceBySymbol(symbol = symbol) // FeignClient Exception
+        }
+            .isInstanceOf(Exception::class.java)
+            .hasMessageContaining("Invalid symbol.")
+    }
+
 }

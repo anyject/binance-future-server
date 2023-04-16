@@ -12,7 +12,6 @@ import org.springframework.core.env.get
 @Configuration
 @EnableEncryptableProperties
 class ApplicationPropertiesEncryptorConfig(val environment: Environment) {
-
     @Bean
     fun jasyptStringEncryptor(): StringEncryptor {
         val encryptPassword = environment["app.jasypt.encryptor.password"]
