@@ -1,12 +1,12 @@
 package com.anyject.binancefutureserver.infrastructure
 
 import com.anyject.binancefutureserver.infrastructure.client.future.BinanceFutureFeignClient
+import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
 import com.anyject.binancefutureserver.infrastructure.client.response.MarketPriceResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -16,19 +16,9 @@ class BinanceFutureFeignClientTest(
     @Test
     fun `getAllExchangeInfo 테스트`() {
         val response = feignClient.getAllExchangeInfo()
-        println(">>>>>>>>>>>>>>>>" + response.body)
-        val body = response.body as String
+        val body = response.body as ExchangeInfoResponse
 
-        var depth = 0
-        for ( c in body ) {
-            when (c) {
-                '[' -> print(c)
-            }
-            println(c)
-        }
-        println(">>>>>>>>>>>>>>>>" + body)
-
-        assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
+        assertThat(response.statusCode).isEqualTo(HttpStatusCode.valueOf(200))
     }
 
     @Test
