@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure.client.future
 
-import com.anyject.binancefutureserver.infrastructure.client.param.CommonHeader
+import com.anyject.binancefutureserver.infrastructure.client.request.header.CommonHeader
 import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
 import com.anyject.binancefutureserver.infrastructure.client.response.MarketPriceResponse
 import org.springframework.cloud.openfeign.FeignClient
