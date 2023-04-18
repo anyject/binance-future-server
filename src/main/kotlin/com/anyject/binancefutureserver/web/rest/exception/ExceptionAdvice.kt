@@ -1,8 +1,9 @@
 package com.anyject.binancefutureserver.web.rest.exception
 
 import com.anyject.binancefutureserver.utils.Slf4j
-import jakarta.servlet.http.HttpServletRequest
+import com.anyject.binancefutureserver.utils.Slf4j.Companion.log
 import jakarta.validation.ConstraintViolationException
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindException
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -14,45 +15,73 @@ import org.springframework.web.servlet.NoHandlerFoundException
 @RestControllerAdvice
 class ExceptionAdvice {
 
-    @ExceptionHandler(value = [IllegalArgumentException::class, IllegalStateException::class])
-    fun handleBadRequestException(ex: RuntimeException, request: HttpServletRequest): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.badRequest().body(bodyOfResponse)
+    @ExceptionHandler(value = [IllegalArgumentException::class])
+    fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ErrorResponse> {
+        log.error("IllegalArgumentException", e)
+        return ResponseEntity.badRequest()
+            .body(ErrorResponse.of(ErrorCode.ILLEGAL_ARGUMENT))
+    }
+
+    @ExceptionHandler(value = [IllegalStateException::class])
+    fun handleIllegalStateException(e: IllegalStateException): ResponseEntity<ErrorResponse> {
+        log.error("IllegalStateException", e)
+        return ResponseEntity.badRequest()
+            .body(ErrorResponse.of(ErrorCode.ILLIGAL_STATE))
     }
 
     @ExceptionHandler(value = [NoHandlerFoundException::class])
-    fun handleNoHandlerFoundException(ex: NoHandlerFoundException, request: HttpServletRequest): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.notFound().build()
+    fun handleNoHandlerFoundException(e: NoHandlerFoundException): ResponseEntity<ErrorResponse> {
+        log.error("NoHandlerFoundException", e)
+        return ResponseEntity(
+            ErrorResponse.of(ErrorCode.NOT_HANDLER_FOUND),
+            HttpStatus.NOT_FOUND
+        )
     }
 
     @ExceptionHandler(value = [BindException::class])
-    fun handleBindException(ex: BindException, request: HttpServletRequest): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.badRequest().body(bodyOfResponse)
+    fun handleBindException(e: BindException): ResponseEntity<ErrorResponse> {
+        log.error("MethodArgumentNotValidException", e)
+        return ResponseEntity.badRequest().body(ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, e.bindingResult))
     }
 
     @ExceptionHandler(value = [ConstraintViolationException::class])
     fun handleConstraintViolationException(
-        ex: ConstraintViolationException,
-        request: HttpServletRequest
-    ): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.badRequest().body(bodyOfResponse)
+        e: ConstraintViolationException
+    ): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.badRequest().body(
+            ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "CONSTRAINT_VIOLATION",
+                e.message ?: "Bad Request",
+                e.constraintViolations.map {
+                    ErrorDetail(
+                        it.propertyPath.toString(),
+                        it.invalidValue?.toString() ?: "",
+                        it.message
+                    )
+                }
+            ))
     }
 
     @ExceptionHandler(value = [MethodArgumentNotValidException::class])
     fun handleMethodArgumentNotValidException(
-        ex: MethodArgumentNotValidException,
-        request: HttpServletRequest
-    ): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.badRequest().body(bodyOfResponse)
+        e: MethodArgumentNotValidException
+    ): ResponseEntity<ErrorResponse> {
+        log.error("MethodArgumentNotValidException", e)
+        return ResponseEntity.badRequest().body(ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, e.bindingResult))
+    }
+
+    @ExceptionHandler(value = [BusinessException::class])
+    fun handleBusinessException(e: BusinessException): ResponseEntity<ErrorResponse> {
+        log.error("BusinessException", e)
+        return ResponseEntity.badRequest()
+            .body(ErrorResponse.of(e.errorCode))
     }
 
     @ExceptionHandler(value = [Exception::class])
-    fun handleAnyException(ex: Exception, request: HttpServletRequest): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.internalServerError().body(bodyOfResponse)
+    fun handleAnyException(e: Exception): ResponseEntity<ErrorResponse> {
+        log.error("UnExpected Exception", e)
+        return ResponseEntity.internalServerError()
+            .body(ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR))
     }
 }
