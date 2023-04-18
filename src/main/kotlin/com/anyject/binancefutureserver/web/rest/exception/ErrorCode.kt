@@ -1,8 +1,8 @@
 package com.anyject.binancefutureserver.web.rest.exception
 
-data class ErrorResponse(
+enum class ErrorCode(
     val status: Int,
     val code: String,
-    val message: String,
-    val errors: List<ErrorDetail> = emptyList()
-)
+    val message: String
+) {
+}

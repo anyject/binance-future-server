@@ -20,12 +20,6 @@ class ExceptionAdvice {
         return ResponseEntity.badRequest().body(bodyOfResponse)
     }
 
-    @ExceptionHandler(value = [Exception::class])
-    fun handleAnyException(ex: Exception, request: HttpServletRequest): ResponseEntity<Any> {
-        val bodyOfResponse = "This should be application specific"
-        return ResponseEntity.internalServerError().body(bodyOfResponse)
-    }
-
     @ExceptionHandler(value = [NoHandlerFoundException::class])
     fun handleNoHandlerFoundException(ex: NoHandlerFoundException, request: HttpServletRequest): ResponseEntity<Any> {
         val bodyOfResponse = "This should be application specific"
@@ -39,14 +33,26 @@ class ExceptionAdvice {
     }
 
     @ExceptionHandler(value = [ConstraintViolationException::class])
-    fun handleConstraintViolationException(ex: ConstraintViolationException, request: HttpServletRequest): ResponseEntity<Any> {
+    fun handleConstraintViolationException(
+        ex: ConstraintViolationException,
+        request: HttpServletRequest
+    ): ResponseEntity<Any> {
         val bodyOfResponse = "This should be application specific"
         return ResponseEntity.badRequest().body(bodyOfResponse)
     }
 
     @ExceptionHandler(value = [MethodArgumentNotValidException::class])
-    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: HttpServletRequest): ResponseEntity<Any> {
+    fun handleMethodArgumentNotValidException(
+        ex: MethodArgumentNotValidException,
+        request: HttpServletRequest
+    ): ResponseEntity<Any> {
         val bodyOfResponse = "This should be application specific"
         return ResponseEntity.badRequest().body(bodyOfResponse)
+    }
+
+    @ExceptionHandler(value = [Exception::class])
+    fun handleAnyException(ex: Exception, request: HttpServletRequest): ResponseEntity<Any> {
+        val bodyOfResponse = "This should be application specific"
+        return ResponseEntity.internalServerError().body(bodyOfResponse)
     }
 }
