@@ -1,4 +1,4 @@
-package com.anyject.binancefutureserver.infrastructure.client.future
+package com.anyject.binancefutureserver.infrastructure.client.future.rest
 
 import com.anyject.binancefutureserver.infrastructure.client.request.header.CommonHeader
 import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 
 @FeignClient(name = "binance", url = "\${app.binance.default-urls.rest.usdm}")
-interface BinanceFutureRestFeignClient {
+interface MarketDataRestFeignClient {
     @GetMapping("/fapi/v1/ping")
     fun getPing(
         @RequestHeader headers: CommonHeader? = CommonHeader()

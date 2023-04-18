@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure
 
-import com.anyject.binancefutureserver.infrastructure.client.future.BinanceFutureRestFeignClient
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.MarketDataRestFeignClient
 import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
 import com.anyject.binancefutureserver.infrastructure.client.response.MarketPriceResponse
 import com.anyject.binancefutureserver.infrastructure.client.response.OrderBook
@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatusCode
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BinanceFutureFeignClientTest(
-    @Autowired val feignClient: BinanceFutureRestFeignClient
+    @Autowired val feignClient: MarketDataRestFeignClient
 ) {
 
     @Test
@@ -26,7 +26,6 @@ class BinanceFutureFeignClientTest(
     @Test
     fun `getBinanceServerTime() 서버 시간 확인`() {
         val response = feignClient.getBinanceServerTime()
-        println(">>>>>>>>>>>>>>>>>>>${response.body}")
         val body = response.body as String
 
         assertThat(response.statusCode).isEqualTo(HttpStatusCode.valueOf(200))
