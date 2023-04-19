@@ -1,5 +1,6 @@
 package com.anyject.binancefutureserver.web.rest.exception
 
+import jakarta.validation.ConstraintViolation
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
 import java.util.stream.Collectors
@@ -28,6 +29,16 @@ data class ErrorDetail(
                     )
                 }
                 .collect(Collectors.toList())
+        }
+
+        fun of(constraintViolations: Set<ConstraintViolation<*>>): List<ErrorDetail> {
+            return constraintViolations.map { error ->
+                ErrorDetail(
+                    error.propertyPath.toString(),
+                    if (error.invalidValue == null) "" else error.invalidValue.toString(),
+                    error.message
+                )
+            }
         }
     }
 }

@@ -48,19 +48,14 @@ class ExceptionAdvice {
     fun handleConstraintViolationException(
         e: ConstraintViolationException
     ): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.badRequest().body(
-            ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                "CONSTRAINT_VIOLATION",
-                e.message ?: "Bad Request",
-                e.constraintViolations.map {
-                    ErrorDetail(
-                        it.propertyPath.toString(),
-                        it.invalidValue?.toString() ?: "",
-                        it.message
-                    )
-                }
-            ))
+        log.error("ConstraintViolationException", e)
+        return ResponseEntity.badRequest()
+            .body(
+                ErrorResponse.of(
+                    ErrorCode.INVALID_INPUT_VALUE,
+                    ErrorDetail.of(e.constraintViolations)
+                )
+            )
     }
 
     @ExceptionHandler(value = [MethodArgumentNotValidException::class])
