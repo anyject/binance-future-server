@@ -26,7 +26,7 @@ class ExceptionAdvice {
     fun handleIllegalStateException(e: IllegalStateException): ResponseEntity<ErrorResponse> {
         log.error("IllegalStateException", e)
         return ResponseEntity.badRequest()
-            .body(ErrorResponse.of(ErrorCode.ILLIGAL_STATE))
+            .body(ErrorResponse.of(ErrorCode.ILLEGAL_STATE))
     }
 
     @ExceptionHandler(value = [NoHandlerFoundException::class])
@@ -69,7 +69,7 @@ class ExceptionAdvice {
     @ExceptionHandler(value = [BusinessException::class])
     fun handleBusinessException(e: BusinessException): ResponseEntity<ErrorResponse> {
         log.error("BusinessException", e)
-        return ResponseEntity.badRequest()
+        return ResponseEntity.internalServerError()
             .body(ErrorResponse.of(e.errorCode))
     }
 

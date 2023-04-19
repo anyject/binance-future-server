@@ -1,155 +1,106 @@
 package com.anyject.binancefutureserver.web.rest.exception
 
-import jakarta.validation.ConstraintViolation
-import jakarta.validation.ConstraintViolationException
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.validation.Validator
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mock
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
-import org.mockito.junit.jupiter.MockitoExtension
-import org.springframework.core.MethodParameter
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
-import org.springframework.mock.web.MockHttpServletRequest
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.validation.BindException
-import org.springframework.validation.BindingResult
-import org.springframework.validation.FieldError
-import org.springframework.web.bind.MethodArgumentNotValidException
-import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletRequestAttributes
-import org.springframework.web.servlet.NoHandlerFoundException
-import java.lang.reflect.Method
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.validation.beanvalidation.MethodValidationInterceptor
 
-@ExtendWith(MockitoExtension::class)
+@AutoConfigureMockMvc
+@SpringBootTest
 class ExceptionAdviceTest {
 
-    private val exceptionAdvice = ExceptionAdvice()
+    @Autowired
+    private lateinit var mockMvc: MockMvc
 
-    private val mockMvc = MockMvcBuilders.standaloneSetup(exceptionAdvice).build()
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
 
-    @Mock
-    private lateinit var bindingResult: BindingResult
+    @Test
+    fun `test IllegalArgumentException handling`() {
+        mockMvc.perform(get("/api/exception/illegal-argument")).andExpect(status().isBadRequest)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.ILLEGAL_ARGUMENT.message))
+    }
+
+    @Test
+    fun `test IllegalStatementException handling`() {
+        mockMvc.perform(get("/api/exception/illegal-statement")).andExpect(status().isBadRequest)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.ILLEGAL_STATE.message))
+    }
+
+    @Test
+    fun `test BusinessException handling`() {
+        mockMvc.perform(get("/api/exception/business-exception")).andExpect(status().isInternalServerError)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.INTERNAL_SERVER_ERROR.message))
+    }
+
+
+    @Test
+    fun `test UnexpectedException handling`() {
+        mockMvc.perform(get("/api/exception/unexpected-exception")).andExpect(status().isInternalServerError)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.INTERNAL_SERVER_ERROR.message))
+    }
+
+    @Test
+    fun `test NoHandlerFoundException handling`() {
+        mockMvc.perform(get("/api/exception/no-handler-found")).andExpect(status().isNotFound)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.NOT_HANDLER_FOUND.message))
+    }
 
     @Test
     fun `test MethodArgumentNotValidException handling`() {
-        val fieldName = "testParam"
-        val errorMessage = "testParam must not be empty"
-        val invalidValue = ""
-        val fieldError = FieldError("TestClass", fieldName, invalidValue, false, null, null, errorMessage)
-        val method: Method = TestDTO::class.java.getMethod("testMethod", String::class.java)
-        val methodParameter = MethodParameter(method, 0)
+        val content = objectMapper.writeValueAsString(TestDTO(""))
+        mockMvc.perform(
+            post("/api/exception/method-argument-not-valid")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.INVALID_INPUT_VALUE.message))
+            .andExpect(jsonPath("\$.errors[0].field").value("test"))
+            .andExpect(jsonPath("\$.errors[0].value").value(""))
+    }
 
-        // BindingResult에 에러 추가
-        `when`(bindingResult.hasErrors()).thenReturn(true)
-        `when`(bindingResult.fieldErrors).thenReturn(listOf(fieldError))
-
-        // 예외 발생
-        assertThatThrownBy {
-            exceptionAdvice.handleMethodArgumentNotValidException(
-                MethodArgumentNotValidException(
-                    methodParameter,
-                    bindingResult
-                )
-            )
-        }
+    @Test
+    fun `test BindException handling`() {
+        val content = objectMapper.writeValueAsString(TestDTO(""))
+        mockMvc.perform(
+            post("/api/exception/bind")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isBadRequest)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.INVALID_INPUT_VALUE.message))
+            .andExpect(jsonPath("\$.errors[0].field").value("test"))
+            .andExpect(jsonPath("\$.errors[0].value").value(""))
     }
 
     @Test
     fun `test ConstraintViolationException handling`() {
-        val errorMessage = "must be greater than or equal to 0"
-        val constraintViolation: ConstraintViolation<Any> =
-            mock(ConstraintViolation::class.java) as ConstraintViolation<Any>
-
-        // ConstraintViolation 객체에 에러 추가
-        `when`(constraintViolation.message).thenReturn(errorMessage)
-
-        // 예외 발생
-        assertThatThrownBy {
-            exceptionAdvice.handleConstraintViolationException(ConstraintViolationException(setOf(constraintViolation)))
-        }
-    }
-
-    @Test
-    fun `handleIllegalArgumentException - 400 Bad Request`() {
-        // Given
-        val request = MockHttpServletRequest()
-        RequestContextHolder.setRequestAttributes(ServletRequestAttributes(request))
-
-        val ex = IllegalArgumentException()
-
-        // When
-        val response = exceptionAdvice.handleIllegalArgumentException(ex)
-
-        // Then
-        assertThat(response.statusCode).isEqualTo(HttpStatus.BAD_REQUEST)
-        assertThat(response.body).isInstanceOf(ErrorResponse::class.java)
-    }
-
-    @Test
-    fun `handleIllegalStateException - 400 Bad Request`() {
-        // Given
-        val request = MockHttpServletRequest()
-        RequestContextHolder.setRequestAttributes(ServletRequestAttributes(request))
-
-        val ex = IllegalStateException()
-
-        // When
-        val response = exceptionAdvice.handleIllegalStateException(ex)
-
-        // Then
-        assertThat(response.statusCode).isEqualTo(HttpStatus.BAD_REQUEST)
-        assertThat(response.body).isInstanceOf(ErrorResponse::class.java)
-    }
-
-    @Test
-    fun `handleAnyException - 500 Internal Server Error`() {
-        // Given
-        val request = MockHttpServletRequest()
-        RequestContextHolder.setRequestAttributes(ServletRequestAttributes(request))
-
-        val ex = Exception()
-
-        // When
-        val response = exceptionAdvice.handleAnyException(ex)
-
-        // Then
-        assertThat(response.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
-        assertThat(response.body).isInstanceOf(ErrorResponse::class.java)
-    }
-
-    @Test
-    fun `handleNoHandlerFoundException - 404 Not Found`() {
-        // Given
-        val request = MockHttpServletRequest()
-        RequestContextHolder.setRequestAttributes(ServletRequestAttributes(request))
-
-        val ex = NoHandlerFoundException("", "", HttpHeaders.EMPTY)
-
-        // When
-        val response = exceptionAdvice.handleNoHandlerFoundException(ex)
-
-        // Then
-        assertThat(response.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
-        assertThat(response.body).isInstanceOf(ErrorResponse::class.java)
-    }
-
-    @Test
-    fun `handleBindException - 400 Bad Request`() {
-        // Given
-        val request = MockHttpServletRequest()
-        RequestContextHolder.setRequestAttributes(ServletRequestAttributes(request))
-        val ex = BindException(TestDTO::class.java, "test")
-
-        // When
-        val response = exceptionAdvice.handleBindException(ex)
-
-        // Then
-        assertThat(response.statusCode).isEqualTo(HttpStatus.BAD_REQUEST)
-        assertThat(response.body).isInstanceOf(ErrorResponse::class.java)
+        val content = objectMapper.writeValueAsString(TestDTO(""))
+        mockMvc.perform(
+            post("/api/exception/constraint-violation")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("\$.message").value(ErrorCode.INVALID_INPUT_VALUE.message))
+            .andExpect(jsonPath("\$.errors[0].field").value("test"))
+            .andExpect(jsonPath("\$.errors[0].value").value(""))
     }
 }
 
