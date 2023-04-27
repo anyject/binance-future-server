@@ -14,9 +14,14 @@ class WebSocketTradeClient(
     val properties: ApplicationProperties,
     val handler: WebSocketHandler
 ) {
+    companion object {
+        private lateinit var session: WebSocketSession
 
-    private val baseUrl = "wss://testnet.binance.vision/ws-api/v3"
-    private lateinit var session: WebSocketSession
+        val setSession = { session: WebSocketSession -> this.session = session }
+
+    }
+    private val baseUrl = properties.binance.defaultUrls.websocket.websocketApi
+
     fun connect() {
         session = StandardWebSocketClient()
             .doHandshake(handler, WebSocketHttpHeaders(),  URI.create(baseUrl))

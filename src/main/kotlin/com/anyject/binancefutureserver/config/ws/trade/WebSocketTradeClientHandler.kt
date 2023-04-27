@@ -3,8 +3,10 @@ package com.anyject.binancefutureserver.config.ws.trade
 
 import com.anyject.binancefutureserver.utils.Slf4j
 import org.springframework.stereotype.Component
-import org.springframework.web.socket.*
-import java.time.LocalDateTime
+import org.springframework.web.socket.CloseStatus
+import org.springframework.web.socket.WebSocketHandler
+import org.springframework.web.socket.WebSocketMessage
+import org.springframework.web.socket.WebSocketSession
 import java.util.*
 
 @Component
@@ -12,25 +14,9 @@ import java.util.*
 class WebSocketTradeClientHandler: WebSocketHandler {
     val timer = Timer()
 
-    private fun scheduleTask(session: WebSocketSession) {
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                val now = LocalDateTime.now().toString()
-                println("SSSSSSSSSSSSSSSSSending message: $now")
-                val json = """
-                    {
-                      "id": "187d3cb2-942d-484c-8271-4e2141bbadb1",
-                      "method": "time"
-                    }
-                """.trimIndent()
-                session.sendMessage(TextMessage(json))
-                scheduleTask(session)
-            }
-        }, 1000)
-    }
     override fun afterConnectionEstablished(session: WebSocketSession) {
         println(">>>>>> afterConnectionEstablished :: $session")
-        //scheduleTask(session)
+        WebSocketTradeClient.setSession(session)
     }
     override fun handleMessage(session: WebSocketSession, message: WebSocketMessage<*>) {
         println(">>>>>> handleMessage :: $session :: ${message.payload}")
