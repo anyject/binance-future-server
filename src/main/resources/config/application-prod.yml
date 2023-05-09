@@ -1,0 +1,13 @@
+app:
+  binance:
+    api-key: ENC(clb7qeGmSd7sI7Yor2IHx6y3bRivJKT+9S8dlazPNfB0ok6qm3PI12v2ck2qM4traR042UpeDTH0I9YEb//kV+T5r8CFxt5B5H27rtIBrCs=)
+    secret-key: ENC(KdGOBGgP0rrZFN5eQrV+7w/C99kmLLCWJnJQMUodBBOxCAjmXXGWPDNmRpGykGZYxfGFge10QwbXKxNV3+hIS1g9IJWkWB4V+6P8Cq4LAk8=)
+    default-urls:
+      rest:
+        usdm: https://fapi.binance.com
+        coinm: https://dapi.binance.com
+      websocket:
+        usdm: wss://fstream.binance.com
+        coinm: wss://dstream.binance.com
+        websocket-api: wss://ws-api.binance.com:443/ws-api/v3
+
