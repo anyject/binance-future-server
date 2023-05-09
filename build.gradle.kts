@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.anyject"
-version = "0.1.0-SNAPSHOT"
+version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_17
 val springCloudVersion = "2022.0.2"
 
