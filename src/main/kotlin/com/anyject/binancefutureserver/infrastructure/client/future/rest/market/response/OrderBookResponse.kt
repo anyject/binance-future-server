@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
-data class OrderBook(
+data class OrderBookResponse(
     val lastUpdateId: Long, // 호가창의 마지막 업데이트 ID
     val E: Long, // 이벤트 시간
     val T: Long, // 이벤트 유형

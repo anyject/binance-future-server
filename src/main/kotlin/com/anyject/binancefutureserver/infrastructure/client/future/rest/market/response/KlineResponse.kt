@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
-data class Kline (
+data class KlineResponse (
     val openTime: Long, // 시작 시간 (timestamp)
     val open: String, // 시작 가격
     val high: String, // 최고 가격

@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
-data class MarketPrice(
+data class MarketPriceResponse(
     val symbol: String,
     val markPrice: String,
     val indexPrice: String,

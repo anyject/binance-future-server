@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
-data class TickerPrice24HourStatistics (
+data class TickerPrice24HourStatisticsResponse (
     val symbol: String,
     val priceChange: String,
     val priceChangePercent: String,

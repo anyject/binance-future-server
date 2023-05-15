@@ -1,6 +1,6 @@
 package com.anyject.binancefutureserver.infrastructure.client.future.rest.trade.response
 
-data class Order(
+data class OrderResponse(
     val clientOrderId: String,
     val cumQty: String,
     val cumQuote: String,
