@@ -1,4 +1,4 @@
-package com.anyject.binancefutureserver.infrastructure.client.response
+package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
 data class Kline (
     val openTime: Long, // 시작 시간 (timestamp)

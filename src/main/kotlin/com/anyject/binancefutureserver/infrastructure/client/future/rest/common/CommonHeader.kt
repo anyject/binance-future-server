@@ -1,4 +1,4 @@
-package com.anyject.binancefutureserver.infrastructure.client.request.header
+package com.anyject.binancefutureserver.infrastructure.client.future.rest.common
 
 import org.springframework.http.MediaType
 

@@ -1,4 +1,4 @@
-package com.anyject.binancefutureserver.infrastructure.client.response
+package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
 data class OrderBook(
     val lastUpdateId: Long, // 호가창의 마지막 업데이트 ID

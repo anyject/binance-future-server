@@ -1,6 +1,6 @@
-package com.anyject.binancefutureserver.infrastructure.client.response
+package com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response
 
-data class ExchangeInfoResponse(
+data class ExchangeInfo(
     val exchangeFilters: List<Any>,
     val rateLimits: List<RateLimit>,
     val serverTime: Long,

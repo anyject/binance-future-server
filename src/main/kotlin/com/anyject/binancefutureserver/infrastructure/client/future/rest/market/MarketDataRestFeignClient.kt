@@ -1,10 +1,10 @@
-package com.anyject.binancefutureserver.infrastructure.client.future.rest
+package com.anyject.binancefutureserver.infrastructure.client.future.rest.market
 
-import com.anyject.binancefutureserver.infrastructure.client.request.header.CommonHeader
-import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
-import com.anyject.binancefutureserver.infrastructure.client.response.MarketPriceResponse
-import com.anyject.binancefutureserver.infrastructure.client.response.OrderBook
-import com.anyject.binancefutureserver.infrastructure.client.response.TickerPrice24HourStatistics
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.common.CommonHeader
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.ExchangeInfo
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.MarketPrice
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.OrderBook
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.TickerPrice24HourStatistics
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,7 +27,7 @@ interface MarketDataRestFeignClient {
     @GetMapping("/fapi/v1/exchangeInfo")
     fun getAllExchangeInfo(
         @RequestHeader headers: CommonHeader? = CommonHeader()
-    ): ResponseEntity<ExchangeInfoResponse>
+    ): ResponseEntity<ExchangeInfo>
 
     @GetMapping("/fapi/v1/depth")
     fun getOrderBookBySymbol(
@@ -50,13 +50,13 @@ interface MarketDataRestFeignClient {
     @GetMapping("/fapi/v1/premiumIndex")
     fun getAllMarketPrice(
         @RequestHeader headers: CommonHeader? = CommonHeader()
-    ): ResponseEntity<List<MarketPriceResponse>>
+    ): ResponseEntity<List<MarketPrice>>
 
     @GetMapping("/fapi/v1/premiumIndex")
     fun getMarketPriceBySymbol(
         @RequestHeader headers: CommonHeader? = CommonHeader(),
         @RequestParam symbol: String,
-    ): ResponseEntity<MarketPriceResponse>
+    ): ResponseEntity<MarketPrice>
 
     @GetMapping("/fapi/v1/klines")
     fun getListKlineBySymbolAndInterval(

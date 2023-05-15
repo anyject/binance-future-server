@@ -1,10 +1,10 @@
 package com.anyject.binancefutureserver.infrastructure
 
-import com.anyject.binancefutureserver.infrastructure.client.future.rest.MarketDataRestFeignClient
-import com.anyject.binancefutureserver.infrastructure.client.response.ExchangeInfoResponse
-import com.anyject.binancefutureserver.infrastructure.client.response.MarketPriceResponse
-import com.anyject.binancefutureserver.infrastructure.client.response.OrderBook
-import com.anyject.binancefutureserver.infrastructure.client.response.TickerPrice24HourStatistics
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.MarketDataRestFeignClient
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.ExchangeInfo
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.MarketPrice
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.OrderBook
+import com.anyject.binancefutureserver.infrastructure.client.future.rest.market.response.TickerPrice24HourStatistics
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -58,7 +58,7 @@ class BinanceFutureFeignClientTest(
     @Test
     fun `getAllExchangeInfo() 테스트`() {
         val response = feignClient.getAllExchangeInfo()
-        val body = response.body as ExchangeInfoResponse
+        val body = response.body as ExchangeInfo
 
         assertThat(response.statusCode).isEqualTo(HttpStatusCode.valueOf(200))
     }
@@ -83,7 +83,7 @@ class BinanceFutureFeignClientTest(
         //val headers =     mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON.toString())
         //val response = feignClient.getAllMarketPrice(headers)
         val response = feignClient.getAllMarketPrice()
-        val body = response.body as List<MarketPriceResponse>
+        val body = response.body as List<MarketPrice>
 
         assertThat(response.statusCode)
             .isEqualTo(HttpStatusCode.valueOf(200))
@@ -93,14 +93,14 @@ class BinanceFutureFeignClientTest(
     fun `getMarketPriceBySymbol() 성공 테스트`() {
         var symbol = "BTCUSDT"
         var response = feignClient.getMarketPriceBySymbol(symbol = symbol)
-        var marketPrice = response.body as MarketPriceResponse
+        var marketPrice = response.body as MarketPrice
         assertThat(response.statusCode)
             .isEqualTo(HttpStatusCode.valueOf(200))
         assertThat(marketPrice).isNotNull
 
         symbol = "ETHUSDT"
         response = feignClient.getMarketPriceBySymbol(symbol = symbol)
-        marketPrice = response.body as MarketPriceResponse
+        marketPrice = response.body as MarketPrice
         assertThat(response.statusCode)
             .isEqualTo(HttpStatusCode.valueOf(200))
         assertThat(marketPrice).isNotNull
